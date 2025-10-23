@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,6 +22,7 @@ class AdapterAnimaux(val lista: MutableList<Animal>):
         val espece = itemView.findViewById<TextView>(R.id.especeAnimal)
         val dButton = itemView.findViewById<ImageButton>(R.id.buttonDetails)
         val sButton = itemView.findViewById<ImageButton>(R.id.buttonSupprimer)
+        val check = itemView.findViewById<CheckBox>(R.id.checkbox)
     }
     override fun getItemCount(): Int { return lista.size }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
@@ -32,10 +34,18 @@ class AdapterAnimaux(val lista: MutableList<Animal>):
         holder.image.setImageResource(animal.Image)
         holder.nom.text = animal.nom
         holder.espece.text = animal.espece
+        holder.check.isChecked = animal.isChecked
+
         holder.dButton.setOnClickListener {
             Toast.makeText(holder.itemView.context,
                 "${animal.nom} est un ${animal.espece}",
                 Toast.LENGTH_SHORT).show() }
+
+        holder.itemView.setOnClickListener {
+            animal.isChecked = !animal.isChecked
+            holder.check.isChecked = animal.isChecked
+        }
+
         holder.sButton.setOnClickListener {
             val alert = AlertDialog.Builder(holder.itemView.context)
             alert.setTitle("Alert de suppression")
@@ -51,7 +61,6 @@ class AdapterAnimaux(val lista: MutableList<Animal>):
                 Toast.makeText(holder.itemView.context, "Annuler", Toast.LENGTH_SHORT).show()
             }
             alert.show()
-
         }
     }
 }
