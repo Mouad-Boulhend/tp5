@@ -1,6 +1,7 @@
 package com.example.tp5
 
 import android.app.AlertDialog
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +43,25 @@ class AdapterAnimaux(val lista: MutableList<Animal>):
                 Toast.LENGTH_SHORT).show() }
 
         holder.itemView.setOnClickListener {
-            animal.isChecked = !animal.isChecked
-            holder.check.isChecked = animal.isChecked
+
+            if(animal.isChecked){
+                animal.isChecked = !animal.isChecked
+                holder.check.isChecked = animal.isChecked
+                Animal.checkedAnimals.remove(animal)
+            }else{
+                animal.isChecked = !animal.isChecked
+                holder.check.isChecked = animal.isChecked
+                Animal.checkedAnimals.add(animal)
+            }
+
+            //holder.itemView.findViewById<TextView>(R.id.checkedAnimals).text = ""
+            //var noms = ""
+            //    Animal.checkedAnimals.forEach { x ->
+            //        noms += x.nom
+            //    holder.itemView.findViewById<TextView>(R.id.checkedAnimals).text = noms
+            //}
+
+
         }
 
         holder.sButton.setOnClickListener {
