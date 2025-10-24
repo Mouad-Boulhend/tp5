@@ -1,6 +1,8 @@
 package com.example.tp5
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +17,7 @@ import androidx.appcompat.view.menu.MenuView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 
-class AdapterAnimaux(val lista: MutableList<Animal>):
+class AdapterAnimaux(val lista: MutableList<Animal>, val context: Context):
     RecyclerView.Adapter<AdapterAnimaux.AnimalViewHolder>() {
     inner class AnimalViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val image = itemView.findViewById<ImageView>(R.id.imageAnimal)
@@ -54,12 +56,15 @@ class AdapterAnimaux(val lista: MutableList<Animal>):
                 Animal.checkedAnimals.add(animal)
             }
 
-            //holder.itemView.findViewById<TextView>(R.id.checkedAnimals).text = ""
-            //var noms = ""
-            //    Animal.checkedAnimals.forEach { x ->
-            //        noms += x.nom
-            //    holder.itemView.findViewById<TextView>(R.id.checkedAnimals).text = noms
-            //}
+            (context as Activity).findViewById<TextView>(R.id.checkedAnimals).text = ""
+            if (!Animal.checkedAnimals.isEmpty()){
+                var noms = ""
+                Animal.checkedAnimals.forEach { x ->
+                    noms += x.nom + ", "
+                }
+                context.findViewById<TextView>(R.id.checkedAnimals).text = noms
+            }
+
 
 
         }

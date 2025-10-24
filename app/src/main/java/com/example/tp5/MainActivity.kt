@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         radioLinear.isChecked = true
 
-        val adapter = AdapterAnimaux(lista)
+        val adapter = AdapterAnimaux(lista, this)
         recyclerView.adapter = adapter
 
         radioGroup.setOnCheckedChangeListener {_, id ->
