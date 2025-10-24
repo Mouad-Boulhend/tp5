@@ -48,7 +48,6 @@ class AdapterAnimaux(val lista: MutableList<Animal>, val context: Context):
                 Toast.LENGTH_SHORT).show() }
 
         holder.itemView.setOnClickListener {
-
             if(animal.isChecked){
                 animal.isChecked = !animal.isChecked
                 holder.check.isChecked = animal.isChecked
@@ -59,17 +58,7 @@ class AdapterAnimaux(val lista: MutableList<Animal>, val context: Context):
                 Animal.checkedAnimals.add(animal)
             }
 
-            (context as Activity).findViewById<TextView>(R.id.checkedAnimals).text = ""
-            if (!Animal.checkedAnimals.isEmpty()){
-                var noms = ""
-                Animal.checkedAnimals.forEach { x ->
-                    noms += x.nom + ", "
-                }
-                context.findViewById<TextView>(R.id.checkedAnimals).text = noms
-            }
-
-
-
+            updateTextView()
         }
 
         holder.sButton.setOnClickListener {
@@ -78,17 +67,38 @@ class AdapterAnimaux(val lista: MutableList<Animal>, val context: Context):
             alert.setMessage("Vous etes sure tu dois supprimer ${animal.nom}?")
 
             alert.setPositiveButton("Oui"){dialog, which ->
+                if (animal.isChecked) {
+                    Animal.checkedAnimals.remove(animal)
+                }
+
                 lista.removeAt(position)
                 Toast.makeText(holder.itemView.context, "${animal.nom} supprimer", Toast.LENGTH_SHORT).show()
                 notifyItemRemoved(position)
+                updateTextView()
             }
 
             alert.setNegativeButton("Annuler"){dialog, which ->
                 Toast.makeText(holder.itemView.context, "Annuler", Toast.LENGTH_SHORT).show()
             }
             alert.show()
+
+
+
+        }
+
+
+    }
+    private fun updateTextView(){
+        (context as Activity).findViewById<TextView>(R.id.checkedAnimals).text = ""
+        if (!Animal.checkedAnimals.isEmpty()){
+            var noms = ""
+            Animal.checkedAnimals.forEach { x ->
+                noms += x.nom + ", "
+            }
+            context.findViewById<TextView>(R.id.checkedAnimals).text = noms
         }
     }
+
 }
 
 
