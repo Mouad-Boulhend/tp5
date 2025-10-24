@@ -39,6 +39,9 @@ class AdapterAnimaux(val lista: MutableList<Animal>, val context: Context):
         holder.espece.text = animal.espece
         holder.check.isChecked = animal.isChecked
 
+        holder.check.isClickable = false
+        holder.check.isFocusable = false
+
         holder.dButton.setOnClickListener {
             Toast.makeText(holder.itemView.context,
                 "${animal.nom} est un ${animal.espece}",
